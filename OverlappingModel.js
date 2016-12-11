@@ -164,11 +164,60 @@ function createOverlappingModel(bitmap, _N, width, height, _periodicInput, _peri
     }
   }
 
+
+  function toBitmap() {
+    let result = [];
+    
+	
+	if (observed) {
+	  for (let y = 0; y < FMY; y++) {
+		let dy = y < FMY - N + 1 ? 0 : N - 1;
+		for (let x = 0; x < FMX; x++) {
+		  let dx = x < FMX - N + 1 ? 0 : N - 1,
+			  c = colors[patterns[observed[x - dx][y - dy]][dx + dy * N]];
+            result += c;
+		  // bitmapData[x + y * FMX] = unchecked((int)0xff000000 | (c.R << 16) | (c.G << 8) | c.B);
+		}
+	  }
+	} else {
+	  for (let y = 0; y < FMY; y++) {
+        for (let x = 0; x < FMX; x++) {
+		  let contributors = 0, r = 0, g = 0, b = 0;
+		  for (let dy = 0; dy < N; dy++) {
+            for (let dx = 0; dx < N; dx++) {
+			  let sx = x - dx;
+			  if (sx < 0) sx += FMX;
+
+			  let sy = y - dy;
+			  if (sy < 0) sy += FMY;
+              
+			  if (onBoundary(sx, sy)) continue;
+			  for (let t = 0; t < T; t++) {
+                if (wave[sx][sy][t]){
+				  contributors++;
+				  let color = colors[patterns[t][dx + dy * N]];
+				  r += color[0];
+				  g += color[1];
+				  b += color[2];
+				}
+              }
+			}
+            result += [r, g, b, 255];
+			// bitmapData[x + y * FMX] = unchecked((int)0xff000000 | ((r / contributors) << 16) | ((g / contributors) << 8) | b / contributors);
+		  }
+	    }
+      }
+    }
+	return Bitmap.createBitmap(result, FMX, FMY);
+  }
+
+  function onBoundary(x, y) {
+    return !periodic && (x + N > FMX || y + N > FMY)
+  }
+    
   return {
     FMX, FMY, T, wave, changes, stationary,
-    onBoundary: function(x, y) {
-      return !periodic && (x + N > FMX || y + N > FMY)
-    },
+    onBoundary, toBitmap,
     propagate: function() {
       let change = false,
           b = false,
