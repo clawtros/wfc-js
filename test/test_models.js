@@ -12,7 +12,7 @@ describe('wfc tests', function() {
 
   describe('model tests', function() {
 
-    it('should survive some semivalid parameters', function() {
+    it('should not fail with some hypothetically valid parameters', function() {
       const bitmap = Bitmap.bitmapFromFS('samples/Red Maze.png'),
             model = OverlappingModel.createOverlappingModel(bitmap, 2),
             prerun = JSON.stringify(model),

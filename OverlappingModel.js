@@ -27,14 +27,17 @@ const Model = require('./Model'),
  * @param {int} symmetry
  * @param {int} ground
  */
-function createOverlappingModel(bitmap, N, width, height, periodicInput, periodicOutput, symmetry, _ground) {
+function createOverlappingModel(bitmap, _N, width, height, _periodicInput, _periodicOutput, _symmetry, _ground) {
   const colors = bitmap.getUniqueColors(),
         sample = bitmap.getColors(),
         SMX = bitmap.width,
         SMY = bitmap.height,
-        FMX = width,
-        FMY = height,
-        periodic = periodicOutput,
+        FMX = width || 48,
+        FMY = height || 48,
+        N = _N || 2,
+        periodic = _periodicOutput === undefined ? false : _periodicOutput,
+        periodicInput = _periodicInput === undefined ? true : _periodicInput,
+        symmetry = _symmetry || 8,
         C = colors.length,
         W = Math.pow(C, N * N),
         pattern = f =>
@@ -47,7 +50,6 @@ function createOverlappingModel(bitmap, N, width, height, periodicInput, periodi
             }
             return result;
           },
-  //f => sample.map((_, y) => (color, x) => f(x, y),
         patternFromSample = (x, y) => pattern((dx, dy) =>
           bitmap.getColor((x + dx) % SMX, (y + dy) % SMY)),
         rotate = p => pattern((x, y) => p[N - 1 - y + x * N]),
@@ -122,7 +124,7 @@ function createOverlappingModel(bitmap, N, width, height, periodicInput, periodi
   }
 
   let T = weights.length,
-      ground = (_ground + T) % T, // this.ground = (ground + T) % T;
+      ground = ((_ground || 0) + T) % T, // this.ground = (ground + T) % T;
       patterns = ordering.map(patternFromIndex),
       stationary = ordering.map(w => weights[w]),
       wave = [],
