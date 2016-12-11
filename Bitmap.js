@@ -37,7 +37,7 @@ function createBitmap(pixels, width, height) {
       return pixelColors.map(
         row =>
           row.map(
-            color => chars[color.slice(0,3).reduce((a,b)=>a+b, 0) / (255 * 3) * (chars.length - 1)]
+            color => chars[color.slice(0,3).reduce((a,b)=>a+b, 0) / (255 * 3) * (chars.length - 1)] || "!"
           ).join("")
       ).join("\n")
     },

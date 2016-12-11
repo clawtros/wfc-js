@@ -18,7 +18,8 @@ describe('wfc tests', function() {
             prerun = JSON.stringify(model),
             seed = 1000,
             limit = 100;
-      Model.run(model, seed, limit)
+      
+      Model.run(model, Math.random(), limit)
       console.log(model.toBitmap().ascii())
       expect(model.failed).to.eql(false)
       

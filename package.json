@@ -5,13 +5,22 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "watch-tests": "mocha -w"
+    "coverage": "istanbul cover _mocha || true",
+    "watch-tests": "mocha -w",
+    "watch": "npm-watch"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Adam Benzan",
+  "license": "MIT",
   "dependencies": {
     "bmp-js": "0.0.3",
     "pngjs": "^3.0.0",
     "xmldoc": "^0.5.1"
+  },
+  "watch": {
+    "coverage": "**/*.js"
+  },
+  "devDependencies": {
+    "istanbul": "^0.4.5",
+    "npm-watch": "^0.1.6"
   }
 }
