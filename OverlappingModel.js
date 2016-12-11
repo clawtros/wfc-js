@@ -42,10 +42,10 @@ function createOverlappingModel(bitmap, _N, width, height, _periodicInput, _peri
         W = Math.pow(C, N * N),
         pattern = f =>
           {
-            let result = new Uint8Array(N * N);
+            let result = [];
             for (let y = 0; y < N; y++) {
               for (let x = 0; x < N; x++) {
-                result[x + y * N] = f(x, y);
+                result = result.concat(f(x, y));
               }
             }
             return result;
@@ -67,7 +67,6 @@ function createOverlappingModel(bitmap, _N, width, height, _periodicInput, _peri
           let residue = ind,
               power = W,
               result = new Uint8Array(N * N);
-
           for (let i = 0; i < result.length; i++) {
             power /= C;
             let count = 0;
@@ -179,17 +178,19 @@ function createOverlappingModel(bitmap, _N, width, height, _periodicInput, _peri
 			let sy = y - dy;
 			if (sy < 0) sy += FMY;
             
-			if (onBoundary(sx, sy)) continue;
+			if (onBoundary(sx, sy)) {
+              continue;
+            }
 			for (let t = 0; t < T; t++) {
               if (wave[sx][sy][t]){
 				contributors++;
 				let color = colors[patterns[t][dx + dy * N]];
+                // let color = patterns[t];
 				r += color[0];
 				g += color[1];
 				b += color[2];
 			  }
             }
-            
             result = result.concat([r, g, b, 255]);
 		  }
 		}

@@ -13,15 +13,24 @@ describe('wfc tests', function() {
   describe('model tests', function() {
 
     it('should not fail with some hypothetically valid parameters', function() {
-      const bitmap = Bitmap.bitmapFromFS('samples/Red Maze.png'),
+      const bitmap = Bitmap.bitmapFromFS('samples/Mountains.png'),
             model = OverlappingModel.createOverlappingModel(bitmap, 2),
             prerun = JSON.stringify(model),
             seed = 1000,
             limit = 100;
-      
-      Model.run(model, Math.random(), limit)
-      console.log(model.toBitmap().ascii())
-      expect(model.failed).to.eql(false)
+      Model.run(model, seed, limit)
+      expect(model.failed).to.eql(false)      
+    })
+
+    it('should probably  do something', function() {
+      const bitmap = Bitmap.bitmapFromFS('samples/Simple Maze.png'),
+            model = OverlappingModel.createOverlappingModel(bitmap, 2),
+            prerun = model.toBitmap().ascii(),
+            seed = 1000,
+            limit = 100;
+            
+      Model.run(model, seed, limit)
+      expect(model.toBitmap().ascii() === prerun).to.eql(false)
       
     })
 
