@@ -111,7 +111,6 @@ function createOverlappingModel(bitmap, N, width, height, periodicInput, periodi
 
       for (let k = 0; k < symmetry; k++) {
         let ind = index(ps[k]);
-        console.log(ind, ps[k]);
         if (weights[ind] !== undefined) {
           weights[ind]++;
         } else {

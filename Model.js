@@ -2,7 +2,7 @@
  * @typedef {Object} Model
  * @property {int} FMX
  * @property {int} FMY
- * @param {function} propagate
+ * @property {function} propagate
  * @property {function} onBoundary
  * @property {int} T
  * @property {Array.<Array.<Array.<boolean>>>} wave
