@@ -13,12 +13,13 @@ describe('wfc tests', function() {
   describe('model tests', function() {
 
     it('should survive some semivalid parameters', function() {
-      const bitmap = Bitmap.bitmapFromFS('../samples/Red Maze.png'),
+      const bitmap = Bitmap.bitmapFromFS('samples/Red Maze.png'),
             model = OverlappingModel.createOverlappingModel(bitmap, 2),
             prerun = JSON.stringify(model),
             seed = 1000,
             limit = 100;
       expect(Model.run(model, seed, limit).failed).to.not.be.ok
+      
     })
 
     it('should implement propagate', function() {
@@ -47,14 +48,6 @@ describe('wfc tests', function() {
             model = OverlappingModel.createOverlappingModel(bitmap, 2, 2, 2, true, true, 2, 0);
 
       expect(Model.observe(model)).to.be.ok
-    })
-  })
-
-  describe('stuff', function() {
-    it('might be able to use an array like a range', function() {
-      expect(
-        Array.prototype.slice.call(new Int8Array(4).map((e, i) => i))
-      ).to.eql([0,1,2,3])
     })
   })
 
@@ -94,12 +87,12 @@ describe('wfc tests', function() {
     })
 
     it('should load valid bitmaps', function() {
-      const bitmap = Bitmap.bitmapFromFS('../samples/Chess.png');
+      const bitmap = Bitmap.bitmapFromFS('samples/Chess.png');
       expect(bitmap.getUniqueColors()).to.be.ok
     })
 
     it('should have a neat ascii representation', function() {
-      const bitmap = Bitmap.bitmapFromFS('../samples/Rule 126.png'),
+      const bitmap = Bitmap.bitmapFromFS('samples/Rule 126.png'),
             ascii = bitmap.ascii();
       expect(ascii).to.be.ok
     })
