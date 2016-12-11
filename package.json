@@ -1,0 +1,17 @@
+{
+  "name": "wavefunctioncollapse",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "watch-tests": "mocha -w"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bmp-js": "0.0.3",
+    "pngjs": "^3.0.0",
+    "xmldoc": "^0.5.1"
+  }
+}
